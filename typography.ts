@@ -1,6 +1,5 @@
 import type {TextStyle} from 'react-native';
 
-/** Веса шрифта (React Native `fontWeight`). */
 export const fontWeight = {
   light: '300',
   regular: '400',
@@ -10,7 +9,6 @@ export const fontWeight = {
   extrabold: '800',
 } as const satisfies Record<string, NonNullable<TextStyle['fontWeight']>>;
 
-/** Размеры текста (модульная шкала). */
 export const fontSize = {
   caption2: 10,
   caption: 11,
