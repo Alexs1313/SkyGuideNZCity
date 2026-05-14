@@ -1,13 +1,13 @@
-export type SkguidenzcittyFcctsCategory =
+export type FactCategory =
   | 'wildlife'
   | 'maori'
   | 'adventure';
 
-export type SkguidenzcittyFcctsFilter = 'all' | SkguidenzcittyFcctsCategory;
+export type FactFilter = 'all' | FactCategory;
 
-export type SkguidenzcittyFcctsEntry = {
+export type Fact = {
   id: string;
-  category: SkguidenzcittyFcctsCategory;
+  category: FactCategory;
   categoryBadge: string;
   badgeEmoji: string;
   title: string;
@@ -15,7 +15,7 @@ export type SkguidenzcittyFcctsEntry = {
   iconEmoji: string;
 };
 
-export const SKGUIDENZCITTY_FCCTS_ITEMS: SkguidenzcittyFcctsEntry[] = [
+export const FACTS: Fact[] = [
   {
     id: 'fc-wildlife-kiwi',
     category: 'wildlife',
@@ -198,11 +198,11 @@ export const SKGUIDENZCITTY_FCCTS_ITEMS: SkguidenzcittyFcctsEntry[] = [
   },
 ];
 
-export function skguidenzcittyFcctsFilterItems(
-  filter: SkguidenzcittyFcctsFilter,
-): SkguidenzcittyFcctsEntry[] {
+export function filterFactsByCategory(
+  filter: FactFilter,
+): Fact[] {
   if (filter === 'all') {
-    return SKGUIDENZCITTY_FCCTS_ITEMS;
+    return FACTS;
   }
-  return SKGUIDENZCITTY_FCCTS_ITEMS.filter(f => f.category === filter);
+  return FACTS.filter(f => f.category === filter);
 }

@@ -1,11 +1,11 @@
-export type SkguidenzcittyQuizQuestion = {
+export type QuizQuestion = {
   id: string;
   prompt: string;
   options: [string, string, string, string];
   correctIndex: 0 | 1 | 2 | 3;
 };
 
-export const SKGUIDENZCITTY_QUIZ_POOL: SkguidenzcittyQuizQuestion[] = [
+export const QUIZ_POOL: QuizQuestion[] = [
   {
     id: 'q-capital',
     prompt: 'What is the capital city of New Zealand?',
@@ -130,19 +130,19 @@ export const SKGUIDENZCITTY_QUIZ_POOL: SkguidenzcittyQuizQuestion[] = [
 
 const QUIZ_ROUND_LEN = 5;
 
-export function skguidenzcittyQuizPickRound(
-  pool: SkguidenzcittyQuizQuestion[] = SKGUIDENZCITTY_QUIZ_POOL,
+export function pickQuizRound(
+  pool: QuizQuestion[] = QUIZ_POOL,
   count: number = QUIZ_ROUND_LEN,
-): SkguidenzcittyQuizQuestion[] {
-  const skguidenzcittyquizCopy = [...pool];
-  for (let skguidenzcittyquizI = skguidenzcittyquizCopy.length - 1; skguidenzcittyquizI > 0; skguidenzcittyquizI--) {
-    const skguidenzcittyquizJ = Math.floor(
-      Math.random() * (skguidenzcittyquizI + 1),
+): QuizQuestion[] {
+  const quizCopy = [...pool];
+  for (let quizI = quizCopy.length - 1; quizI > 0; quizI--) {
+    const quizJ = Math.floor(
+      Math.random() * (quizI + 1),
     );
-    const skguidenzcittyquizT = skguidenzcittyquizCopy[skguidenzcittyquizI];
-    skguidenzcittyquizCopy[skguidenzcittyquizI] =
-      skguidenzcittyquizCopy[skguidenzcittyquizJ];
-    skguidenzcittyquizCopy[skguidenzcittyquizJ] = skguidenzcittyquizT;
+    const quizT = quizCopy[quizI];
+    quizCopy[quizI] =
+      quizCopy[quizJ];
+    quizCopy[quizJ] = quizT;
   }
-  return skguidenzcittyquizCopy.slice(0, Math.min(count, pool.length));
+  return quizCopy.slice(0, Math.min(count, pool.length));
 }

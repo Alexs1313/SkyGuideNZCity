@@ -1,11 +1,11 @@
 import {NavigationContainer} from '@react-navigation/native';
 
-import Skguidenzcittystack from './Skguidenzcitty/Skguidenzcittyroute/Skguidenzcittystack.tsx';
+import RootStack from './app/navigation/RootStack';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Skguidenzcittystack />
+      <RootStack />
     </NavigationContainer>
   );
 };

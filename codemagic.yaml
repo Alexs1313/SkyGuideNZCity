@@ -4,17 +4,17 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
     integrations:
-      app_store_connect: SkyGuideNZAPIKey
+      app_store_connect: GuideNZAPIKey
     environment:
       xcode: '26.0'
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.dkfldruei.llgofhjry
+        bundle_identifier: com.skfhk.gjhf.mbnc
       vars:
-        BUNDLE_ID: com.dkfldruei.llgofhjry
+        BUNDLE_ID: com.skfhk.gjhf.mbnc
         XCODE_WORKSPACE: SkyGuideNZCity.xcworkspace
         XCODE_SCHEME: SkyGuideNZCity
-        APP_STORE_APPLE_ID: 6769280634
+        APP_STORE_APPLE_ID: 6769357437
     scripts:
       - name: Install npm dependencies
         script: |

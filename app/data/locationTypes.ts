@@ -1,15 +1,15 @@
-export type SkguidenzcittyLocsCategory =
+export type LocationCategory =
   | 'fjords'
   | 'volcanoes'
   | 'glaciers'
   | 'forests'
   | 'lakes';
 
-export type SkguidenzcittyLocsFilter = 'all' | SkguidenzcittyLocsCategory;
+export type LocationFilter = 'all' | LocationCategory;
 
-export type SkguidenzcittyLocEntry = {
+export type LocationItem = {
   id: string;
-  category: SkguidenzcittyLocsCategory;
+  category: LocationCategory;
   categoryBadge: string;
   badgeEmoji: string;
   name: string;

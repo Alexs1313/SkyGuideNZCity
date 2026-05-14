@@ -1,8 +1,8 @@
 import type {ImageSourcePropType} from 'react-native';
 
-import type {SkguidenzcittyLocEntry} from './skguidenzcittylocstypes';
+import type {LocationFilter, LocationItem} from './locationTypes';
 
-export const SKGUIDENZCITTY_LOCS_HERO_PLACEHOLDERS: ImageSourcePropType[] = [
+export const LOCATION_HERO_PLACEHOLDERS: ImageSourcePropType[] = [
   require('../../assets/i/skguidenzcittytaonbg1.png'),
   require('../../assets/i/skguidenzcittytaonbg2.png'),
   require('../../assets/i/skguidenzcittytaonbg3.png'),
@@ -10,15 +10,15 @@ export const SKGUIDENZCITTY_LOCS_HERO_PLACEHOLDERS: ImageSourcePropType[] = [
   require('../../assets/i/skguidenzcittytaonbg5.png'),
 ];
 
-export function skguidenzcittyLocsHeroForIndex(
+export function heroImageForLocationIndex(
   index: number,
 ): ImageSourcePropType {
-  return SKGUIDENZCITTY_LOCS_HERO_PLACEHOLDERS[
-    index % SKGUIDENZCITTY_LOCS_HERO_PLACEHOLDERS.length
+  return LOCATION_HERO_PLACEHOLDERS[
+    index % LOCATION_HERO_PLACEHOLDERS.length
   ];
 }
 
-export const SKGUIDENZCITTY_LOCS_ITEMS: SkguidenzcittyLocEntry[] = [
+export const LOCATIONS: LocationItem[] = [
   {
     id: 'milford-sound',
     category: 'fjords',
@@ -352,17 +352,15 @@ export const SKGUIDENZCITTY_LOCS_ITEMS: SkguidenzcittyLocEntry[] = [
   },
 ];
 
-export function skguidenzcittyLocsById(
-  id: string,
-): SkguidenzcittyLocEntry | undefined {
-  return SKGUIDENZCITTY_LOCS_ITEMS.find(s => s.id === id);
+export function locationById(id: string): LocationItem | undefined {
+  return LOCATIONS.find(s => s.id === id);
 }
 
-export function skguidenzcittyLocsFilterItems(
-  filter: import('./skguidenzcittylocstypes').SkguidenzcittyLocsFilter,
-): SkguidenzcittyLocEntry[] {
+export function filterLocationsByCategory(
+  filter: LocationFilter,
+): LocationItem[] {
   if (filter === 'all') {
-    return SKGUIDENZCITTY_LOCS_ITEMS;
+    return LOCATIONS;
   }
-  return SKGUIDENZCITTY_LOCS_ITEMS.filter(l => l.category === filter);
+  return LOCATIONS.filter(l => l.category === filter);
 }
