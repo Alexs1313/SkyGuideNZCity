@@ -18,10 +18,7 @@ import GoldGradientButton from '../components/GoldGradientButton';
 import ScreenLayout from '../components/ScreenLayout';
 
 import type {RootStackParamList} from '../navigation/RootStack';
-import {
-  LOCATIONS,
-  heroImageForLocationIndex,
-} from '../data/locationsData';
+import {LOCATIONS, heroImageForLocationIndex} from '../data/locationsData';
 import type {LocationItem} from '../data/locationTypes';
 import {useSavedLocations} from './savedLocationsContext';
 
@@ -77,10 +74,7 @@ const SavedScreen = () => {
     return (
       <ScreenLayout>
         <View
-          style={[
-            styles.savedEmptyRoot,
-            {paddingTop: savedInsets.top + 8},
-          ]}>
+          style={[styles.savedEmptyRoot, {paddingTop: savedInsets.top + 8}]}>
           <View style={styles.savedEmptyHeader}>
             <Text style={styles.savedKicker}>COLLECTION</Text>
             <Text style={styles.savedTitle}>Saved Places</Text>
@@ -92,9 +86,7 @@ const SavedScreen = () => {
                 source={require('../../assets/i/skguidenzcittytnosv.png')}
               />
             </View>
-            <Text style={styles.savedEmptyHeading}>
-              No saved places yet
-            </Text>
+            <Text style={styles.savedEmptyHeading}>No saved places yet</Text>
             <Text style={styles.savedEmptySub}>
               Tap the bookmark icon on any location to save it here for later.
             </Text>
@@ -103,9 +95,7 @@ const SavedScreen = () => {
               colors={[GOLD_GRAD_TOP, GOLD_GRAD_BOTTOM]}
               containerStyle={styles.savedCtaOuter}
               gradientStyle={styles.savedCtaGrad}>
-              <Text style={styles.savedCtaText}>
-                Explore Locations
-              </Text>
+              <Text style={styles.savedCtaText}>Explore Locations</Text>
             </GoldGradientButton>
           </View>
         </View>
@@ -120,17 +110,11 @@ const SavedScreen = () => {
 
   return (
     <ScreenLayout>
-      <View
-        style={[
-          styles.savedListRoot,
-          {paddingTop: savedInsets.top + 8},
-        ]}>
+      <View style={[styles.savedListRoot, {paddingTop: savedInsets.top + 8}]}>
         <View style={styles.savedHeader}>
           <Text style={styles.savedKicker}>COLLECTION</Text>
           <Text style={styles.savedTitle}>Saved Places</Text>
-          <Text style={styles.savedSub}>
-            {savedSub}
-          </Text>
+          <Text style={styles.savedSub}>{savedSub}</Text>
         </View>
 
         <FlatList
@@ -167,20 +151,13 @@ function SavedLocationCard({
   onOpen: () => void;
   onToggleBookmark: () => void;
 }) {
-  const savedGi = LOCATIONS.findIndex(
-    l => l.id === item.id,
-  );
-  const savedHero = heroImageForLocationIndex(
-    savedGi >= 0 ? savedGi : index,
-  );
+  const savedGi = LOCATIONS.findIndex(l => l.id === item.id);
+  const savedHero = heroImageForLocationIndex(savedGi >= 0 ? savedGi : index);
 
   return (
     <Pressable
       onPress={onOpen}
-      style={({pressed}) => [
-        styles.savedCard,
-        pressed && styles.savedPressed,
-      ]}>
+      style={({pressed}) => [styles.savedCard, pressed && styles.savedPressed]}>
       <ImageBackground
         source={savedHero}
         style={styles.savedCardBg}
@@ -232,7 +209,7 @@ function SavedListSeparator() {
 const styles = StyleSheet.create({
   savedEmptyRoot: {
     flex: 1,
-    backgroundColor: BG,
+
     minHeight: '100%',
   },
   savedEmptyHeader: {

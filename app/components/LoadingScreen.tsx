@@ -6,148 +6,210 @@ import {useNavigation} from '@react-navigation/native';
 import WebView from 'react-native-webview';
 
 const loadhtmlloader = `<!DOCTYPE html>
-    <html>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-          * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-          }
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
 
-          html, body {
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            overflow: hidden;
-          }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-          body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
+    .loader {
+      --fill-color: #5c3d99;
+      --shine-color: #5c3d9933;
+      transform: scale(0.5);
+      width: 100px;
+      height: 100px;
+      position: relative;
+      filter: drop-shadow(0 0 10px var(--shine-color));
+    }
 
-          .container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
+    .loader svg {
+      width: 100px;
+      height: 100px;
+    }
 
-          .tree {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            transform-style: preserve-3d;
-            transform: rotateX(-20deg) rotateY(30deg);
-            animation: treeAnimate 5s linear infinite;
-          }
+    .loader #pegtopone {
+      position: absolute;
+      animation: flowe-one 1s linear infinite;
+    }
 
-          @keyframes treeAnimate {
-            0% {
-              transform: rotateX(-20deg) rotateY(360deg);
-            }
+    .loader #pegtoptwo {
+      position: absolute;
+      opacity: 0;
+      transform: scale(0) translateY(-200px) translateX(-100px);
+      animation: flowe-two 1s linear infinite;
+      animation-delay: 0.3s;
+    }
 
-            100% {
-              transform: rotateX(-20deg) rotateY(0deg);
-            }
-          }
+    .loader #pegtopthree {
+      position: absolute;
+      opacity: 0;
+      transform: scale(0) translateY(-200px) translateX(100px);
+      animation: flowe-three 1s linear infinite;
+      animation-delay: 0.6s;
+    }
 
-          .tree div {
-            position: absolute;
-            top: -50px;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transform: translateY(calc(25px * var(--x))) translateZ(0px);
-          }
+    .loader svg g path:first-child {
+      fill: var(--fill-color);
+    }
 
-          .tree div.branch span {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #69c069, #77dd77);
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            border-bottom: 5px solid #00000019;
-            transform-origin: bottom;
-            transform: rotateY(calc(90deg * var(--i))) rotateX(30deg) translateZ(28.5px);
-          }
+    @keyframes flowe-one {
+      0% {
+        transform: scale(0.5) translateY(-200px);
+        opacity: 0;
+      }
 
-          .tree div.stem span {
-            position: absolute;
-            top: 110px;
-            left: calc(50% - 7.5px);
-            width: 15px;
-            height: 50%;
-            background: linear-gradient(90deg, #bb4622, #df7214);
-            border-bottom: 5px solid #00000019;
-            transform-origin: bottom;
-            transform: rotateY(calc(90deg * var(--i))) translateZ(7.5px);
-          }
+      25% {
+        transform: scale(0.75) translateY(-100px);
+        opacity: 1;
+      }
 
-          .shadow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            filter: blur(20px);
-            transform-style: preserve-3d;
-            transform: rotateX(90deg) translateZ(-65px);
-          }
-        </style>
-      </head>
+      50% {
+        transform: scale(1) translateY(0px);
+        opacity: 1;
+      }
 
-      <body>
-        <div class="container">
-          <div class="tree">
-            <div class="branch" style="--x: 0;">
-              <span style="--i: 0;"></span>
-              <span style="--i: 1;"></span>
-              <span style="--i: 2;"></span>
-              <span style="--i: 3;"></span>
-            </div>
+      75% {
+        transform: scale(0.5) translateY(50px);
+        opacity: 1;
+      }
 
-            <div class="branch" style="--x: 1;">
-              <span style="--i: 0;"></span>
-              <span style="--i: 1;"></span>
-              <span style="--i: 2;"></span>
-              <span style="--i: 3;"></span>
-            </div>
+      100% {
+        transform: scale(0) translateY(100px);
+        opacity: 0;
+      }
+    }
 
-            <div class="branch" style="--x: 2;">
-              <span style="--i: 0;"></span>
-              <span style="--i: 1;"></span>
-              <span style="--i: 2;"></span>
-              <span style="--i: 3;"></span>
-            </div>
+    @keyframes flowe-two {
+      0% {
+        transform: scale(0.5) rotateZ(-10deg) translateY(-200px) translateX(-100px);
+        opacity: 0;
+      }
 
-            <div class="branch" style="--x: 3;">
-              <span style="--i: 0;"></span>
-              <span style="--i: 1;"></span>
-              <span style="--i: 2;"></span>
-              <span style="--i: 3;"></span>
-            </div>
+      25% {
+        transform: scale(1) rotateZ(-5deg) translateY(-100px) translateX(-50px);
+        opacity: 1;
+      }
 
-            <div class="stem">
-              <span style="--i: 0;"></span>
-              <span style="--i: 1;"></span>
-              <span style="--i: 2;"></span>
-              <span style="--i: 3;"></span>
-            </div>
+      50% {
+        transform: scale(1) rotateZ(0deg) translateY(0px) translateX(-25px);
+        opacity: 1;
+      }
 
-            <span class="shadow"></span>
-          </div>
-        </div>
-      </body>
-    </html>`;
+      75% {
+        transform: scale(0.5) rotateZ(5deg) translateY(50px) translateX(0px);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0) rotateZ(10deg) translateY(100px) translateX(25px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes flowe-three {
+      0% {
+        transform: scale(0.5) rotateZ(10deg) translateY(-200px) translateX(100px);
+        opacity: 0;
+      }
+
+      25% {
+        transform: scale(1) rotateZ(5deg) translateY(-100px) translateX(50px);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1) rotateZ(0deg) translateY(0px) translateX(25px);
+        opacity: 1;
+      }
+
+      75% {
+        transform: scale(0.5) rotateZ(-5deg) translateY(50px) translateX(0px);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0) rotateZ(-10deg) translateY(100px) translateX(-25px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="loader">
+    ${[1, 2, 3]
+      .map(
+        (_, index) => `
+        <svg id="pegtop${
+          index === 0 ? 'one' : index === 1 ? 'two' : 'three'
+        }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <defs>
+            <filter id="shine${index}">
+              <feGaussianBlur stdDeviation="3" />
+            </filter>
+
+            <mask id="mask${index}">
+              <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="white" />
+            </mask>
+
+            <radialGradient id="gradient-1-${index}" cx="50" cy="66" fx="50" fy="66" r="30" gradientTransform="translate(0 35) scale(1 0.5)" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="black" stop-opacity="0.3" />
+              <stop offset="50%" stop-color="black" stop-opacity="0.1" />
+              <stop offset="100%" stop-color="black" stop-opacity="0" />
+            </radialGradient>
+
+            <radialGradient id="gradient-2-${index}" cx="55" cy="20" fx="55" fy="20" r="30" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="white" stop-opacity="0.3" />
+              <stop offset="50%" stop-color="white" stop-opacity="0.1" />
+              <stop offset="100%" stop-color="white" stop-opacity="0" />
+            </radialGradient>
+
+            <radialGradient id="gradient-3-${index}" cx="85" cy="50" fx="85" fy="50">
+              <stop offset="0%" stop-color="white" stop-opacity="0.3" />
+              <stop offset="50%" stop-color="white" stop-opacity="0.1" />
+              <stop offset="100%" stop-color="white" stop-opacity="0" />
+            </radialGradient>
+
+            <radialGradient id="gradient-4-${index}" cx="50" cy="58" fx="50" fy="58" r="60" gradientTransform="translate(0 47) scale(1 0.2)">
+              <stop offset="0%" stop-color="white" stop-opacity="0.3" />
+              <stop offset="50%" stop-color="white" stop-opacity="0.1" />
+              <stop offset="100%" stop-color="white" stop-opacity="0" />
+            </radialGradient>
+
+            <linearGradient id="gradient-5-${index}" x1="50" y1="90" x2="50" y2="10" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="black" stop-opacity="0.2" />
+              <stop offset="40%" stop-color="black" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+
+          <g>
+            <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="currentColor" />
+            <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="url(#gradient-1-${index})" />
+            <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="none" stroke="white" opacity="0.3" stroke-width="3" filter="url(#shine${index})" mask="url(#mask${index})" />
+            <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="url(#gradient-2-${index})" />
+            <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="url(#gradient-3-${index})" />
+            <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="url(#gradient-4-${index})" />
+            <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z" fill="url(#gradient-5-${index})" />
+          </g>
+        </svg>
+      `,
+      )
+      .join('')}
+  </div>
+</body>
+</html>`;
 
 const LoadingScreen = () => {
   const loadNavigation = useNavigation();
@@ -170,7 +232,7 @@ const LoadingScreen = () => {
         <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
           {Platform.OS === 'android' ? (
             <Image
-              source={require('../../assets/i/icon.png')}
+              source={require('../../assets/i/sky2.png')}
               style={{width: 210, height: 210, borderRadius: 45}}
             />
           ) : (

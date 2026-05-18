@@ -1,7 +1,6 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
 
-/** Те же оттенки, что на экране онбординга. */
 const ONBOARD_GOLD = '#C9A24A';
 
 type OnboardingOutlineBackButtonProps = {
@@ -14,10 +13,7 @@ const OnboardingOutlineBackButton = ({
   return (
     <Pressable
       onPress={onPress}
-      style={({pressed}) => [
-        styles.btn,
-        pressed && styles.pressed,
-      ]}>
+      style={({pressed}) => [styles.btn, pressed && styles.pressed]}>
       <Text style={styles.label}>Back</Text>
     </Pressable>
   );

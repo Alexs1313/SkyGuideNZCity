@@ -5,10 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import GoldGradientButton from '../components/GoldGradientButton';
 import ScreenLayout from '../components/ScreenLayout';
-import {
-  pickQuizRound,
-  type QuizQuestion,
-} from '../data/quizData';
+import {pickQuizRound, type QuizQuestion} from '../data/quizData';
 
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -29,23 +26,17 @@ type QuizPhase = 'intro' | 'quiz' | 'results';
 
 const QuizScreen = () => {
   const quizInsets = useSafeAreaInsets();
-  const [quizPhase, setQuizPhase] =
-    useState<QuizPhase>('intro');
-  const [quizDeck, setQuizDeck] = useState<
-    QuizQuestion[]
-  >([]);
+  const [quizPhase, setQuizPhase] = useState<QuizPhase>('intro');
+  const [quizDeck, setQuizDeck] = useState<QuizQuestion[]>([]);
   const [quizIndex, setQuizIndex] = useState(0);
-  const [quizAnswers, setQuizAnswers] = useState<
-    (number | null)[]
-  >(() => Array(QUIZ_LEN).fill(null));
-  const [quizLocked, setQuizLocked] =
-    useState(false);
+  const [quizAnswers, setQuizAnswers] = useState<(number | null)[]>(() =>
+    Array(QUIZ_LEN).fill(null),
+  );
+  const [quizLocked, setQuizLocked] = useState(false);
   const [quizTime, setQuizTime] = useState(SECONDS);
 
-  const quizCurrent =
-    quizDeck[quizIndex];
-  const quizLast =
-    quizIndex >= quizDeck.length - 1;
+  const quizCurrent = quizDeck[quizIndex];
+  const quizLast = quizIndex >= quizDeck.length - 1;
 
   useFocusEffect(
     useCallback(() => {
@@ -57,13 +48,8 @@ const QuizScreen = () => {
   );
 
   useEffect(() => {
-    const quizHasQ =
-      quizDeck[quizIndex] !== undefined;
-    if (
-      quizPhase !== 'quiz' ||
-      quizLocked ||
-      !quizHasQ
-    ) {
+    const quizHasQ = quizDeck[quizIndex] !== undefined;
+    if (quizPhase !== 'quiz' || quizLocked || !quizHasQ) {
       return;
     }
     const quizTick = setInterval(() => {
@@ -76,12 +62,7 @@ const QuizScreen = () => {
       });
     }, 1000);
     return () => clearInterval(quizTick);
-  }, [
-    quizPhase,
-    quizLocked,
-    quizIndex,
-    quizDeck,
-  ]);
+  }, [quizPhase, quizLocked, quizIndex, quizDeck]);
 
   useEffect(() => {
     if (quizPhase !== 'quiz') {
@@ -92,10 +73,7 @@ const QuizScreen = () => {
   }, [quizPhase, quizIndex]);
 
   const quizStart = useCallback(() => {
-    const quizRound = pickQuizRound(
-      undefined,
-      QUIZ_LEN,
-    );
+    const quizRound = pickQuizRound(undefined, QUIZ_LEN);
     setQuizDeck(quizRound);
     setQuizIndex(0);
     setQuizAnswers(Array(QUIZ_LEN).fill(null));
@@ -119,11 +97,7 @@ const QuizScreen = () => {
       });
       setQuizLocked(true);
     },
-    [
-      quizLocked,
-      quizPhase,
-      quizIndex,
-    ],
+    [quizLocked, quizPhase, quizIndex],
   );
 
   const quizNext = useCallback(() => {
@@ -151,29 +125,21 @@ const QuizScreen = () => {
     () =>
       quizDeck.length === 0
         ? 0
-        : Math.round(
-            (quizScore / quizDeck.length) * 100,
-          ),
+        : Math.round((quizScore / quizDeck.length) * 100),
     [quizScore, quizDeck.length],
   );
 
   const quizShare = useCallback(async () => {
     const quizLines = quizDeck
       .map((q, i) => {
-        const quizOk =
-          quizAnswers[i] === q.correctIndex;
+        const quizOk = quizAnswers[i] === q.correctIndex;
         return `${i + 1}. ${quizOk ? '✓' : '✗'} ${q.prompt}`;
       })
       .join('\n');
     await Share.share({
       message: `Quiz Results: ${quizScore}/${quizDeck.length} (${quizPct}%)\n\n${quizLines}`,
     });
-  }, [
-    quizDeck,
-    quizAnswers,
-    quizScore,
-    quizPct,
-  ]);
+  }, [quizDeck, quizAnswers, quizScore, quizPct]);
 
   const quizResultsTitle = useMemo(() => {
     if (quizPct >= 80) {
@@ -217,12 +183,8 @@ const QuizScreen = () => {
                 <Text style={styles.quizIntroIconMark}>?</Text>
               </View>
             </View>
-            <Text style={styles.quizIntroTitle}>
-              NZ Knowledge
-            </Text>
-            <Text style={styles.quizIntroSub}>
-              QUIZ CHALLENGE
-            </Text>
+            <Text style={styles.quizIntroTitle}>NZ Knowledge</Text>
+            <Text style={styles.quizIntroSub}>QUIZ CHALLENGE</Text>
           </LinearGradient>
 
           <View style={{paddingHorizontal: 20}}>
@@ -247,9 +209,7 @@ const QuizScreen = () => {
                   <Text style={styles.quizInfoIcon}>❓</Text>
                 </View>
                 <View style={styles.quizInfoText}>
-                  <Text style={styles.quizInfoTitle}>
-                    5 Questions
-                  </Text>
+                  <Text style={styles.quizInfoTitle}>5 Questions</Text>
                   <Text style={styles.quizInfoDesc}>
                     Covering nature, Māori culture, and adventure
                   </Text>
@@ -270,9 +230,7 @@ const QuizScreen = () => {
                   <Text style={styles.quizInfoIcon}>⏱️</Text>
                 </View>
                 <View style={styles.quizInfoText}>
-                  <Text style={styles.quizInfoTitle}>
-                    15 Seconds Each
-                  </Text>
+                  <Text style={styles.quizInfoTitle}>15 Seconds Each</Text>
                   <Text style={styles.quizInfoDesc}>
                     Answer before the timer runs out
                   </Text>
@@ -293,9 +251,7 @@ const QuizScreen = () => {
                   <Text style={styles.quizInfoIcon}>✅</Text>
                 </View>
                 <View style={styles.quizInfoText}>
-                  <Text style={styles.quizInfoTitle}>
-                    4 Options
-                  </Text>
+                  <Text style={styles.quizInfoTitle}>4 Options</Text>
                   <Text style={styles.quizInfoDesc}>
                     Only one answer is correct per question
                   </Text>
@@ -306,9 +262,7 @@ const QuizScreen = () => {
             <GoldGradientButton
               onPress={quizStart}
               gradientStyle={styles.quizPrimaryBtn}>
-              <Text style={styles.quizPrimaryBtnText}>
-                Start Quiz →
-              </Text>
+              <Text style={styles.quizPrimaryBtnText}>Start Quiz →</Text>
             </GoldGradientButton>
           </View>
         </View>
@@ -337,9 +291,7 @@ const QuizScreen = () => {
                 <Text style={styles.quizScoreBig}>
                   {quizScore}/{quizDeck.length}
                 </Text>
-                <Text style={styles.quizScorePct}>
-                  {quizPct}%
-                </Text>
+                <Text style={styles.quizScorePct}>{quizPct}%</Text>
 
                 <Image
                   source={require('../../assets/i/skguidenzcittrng.png')}
@@ -350,37 +302,28 @@ const QuizScreen = () => {
                 />
               </View>
               <Text style={styles.quizStar}>⭐</Text>
-              <Text style={styles.quizResultsHead}>
-                {quizResultsTitle}
-              </Text>
-              <Text style={styles.quizResultsSub}>
-                {quizResultsSub}
-              </Text>
+              <Text style={styles.quizResultsHead}>{quizResultsTitle}</Text>
+              <Text style={styles.quizResultsSub}>{quizResultsSub}</Text>
             </View>
           </LinearGradient>
 
           <View style={{paddingHorizontal: 20}}>
             <Text style={styles.quizReviewKicker}>REVIEW</Text>
             {quizDeck.map((q, i) => {
-              const quizOk =
-                quizAnswers[i] === q.correctIndex;
+              const quizOk = quizAnswers[i] === q.correctIndex;
               return (
                 <View
                   key={q.id}
                   style={[
                     styles.quizReviewCard,
-                    quizOk
-                      ? styles.quizReviewOk
-                      : styles.quizReviewBad,
+                    quizOk ? styles.quizReviewOk : styles.quizReviewBad,
                   ]}>
                   <View style={styles.quizReviewTop}>
                     <View
                       style={{
                         width: 26,
                         height: 26,
-                        backgroundColor: quizOk
-                          ? '#48BB7826'
-                          : '#E840401F',
+                        backgroundColor: quizOk ? '#48BB7826' : '#E840401F',
                         borderRadius: 7,
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -394,9 +337,7 @@ const QuizScreen = () => {
                         {quizOk ? '✓' : '✕'}
                       </Text>
                     </View>
-                    <Text style={styles.quizReviewQ}>
-                      {q.prompt}
-                    </Text>
+                    <Text style={styles.quizReviewQ}>{q.prompt}</Text>
                   </View>
                   <View style={styles.quizReviewDivider} />
                   {quizOk ? (
@@ -427,9 +368,7 @@ const QuizScreen = () => {
                   start={{x: 0.5, y: 0}}
                   end={{x: 0.5, y: 1}}
                   style={[styles.quizShareBtn]}>
-                  <Text style={styles.quizShareBtnText}>
-                    Share
-                  </Text>
+                  <Text style={styles.quizShareBtnText}>Share</Text>
                 </LinearGradient>
               </Pressable>
               <Pressable
@@ -454,20 +393,14 @@ const QuizScreen = () => {
     return null;
   }
 
-  const quizProgress =
-    (quizIndex + 1) / quizDeck.length;
+  const quizProgress = (quizIndex + 1) / quizDeck.length;
   const quizTimeFrac = quizTime / SECONDS;
-  const quizChosen =
-    quizAnswers[quizIndex];
+  const quizChosen = quizAnswers[quizIndex];
   const quizTimerWarn = quizTime <= 5;
 
   return (
     <ScreenLayout>
-      <View
-        style={[
-          styles.quizRoot,
-          {paddingTop: quizInsets.top + 8},
-        ]}>
+      <View style={[styles.quizRoot, {paddingTop: quizInsets.top + 8}]}>
         <View style={styles.quizTopRow}>
           <Pressable
             onPress={quizExit}
@@ -489,17 +422,12 @@ const QuizScreen = () => {
 
         <View style={styles.quizProgTrack}>
           <View
-            style={[
-              styles.quizProgFill,
-              {width: `${quizProgress * 100}%`},
-            ]}
+            style={[styles.quizProgFill, {width: `${quizProgress * 100}%`}]}
           />
         </View>
 
         <View style={styles.quizTimerHeader}>
-          <Text style={styles.quizTimerLabel}>
-            TIME REMAINING
-          </Text>
+          <Text style={styles.quizTimerLabel}>TIME REMAINING</Text>
           <Text
             style={[
               styles.quizTimerVal,
@@ -514,19 +442,14 @@ const QuizScreen = () => {
               styles.quizTimerFill,
               {
                 width: `${quizTimeFrac * 100}%`,
-                backgroundColor: quizTimerWarn
-                  ? TIMER_WARN
-                  : GOLD,
+                backgroundColor: quizTimerWarn ? TIMER_WARN : GOLD,
               },
             ]}
           />
         </View>
 
         <View
-          style={[
-            styles.quizScroll,
-            {paddingBottom: quizInsets.bottom + 88},
-          ]}>
+          style={[styles.quizScroll, {paddingBottom: quizInsets.bottom + 88}]}>
           <View style={styles.quizQCard}>
             <View
               style={{
@@ -540,25 +463,18 @@ const QuizScreen = () => {
                 start={{x: 0.5, y: 0}}
                 end={{x: 0.5, y: 1}}
                 style={styles.quizQBadge}>
-                <Text style={styles.quizQNumText}>
-                  {quizIndex + 1}
-                </Text>
+                <Text style={styles.quizQNumText}>{quizIndex + 1}</Text>
               </LinearGradient>
               <Text style={styles.quizQLabel}>QUESTION</Text>
             </View>
-            <Text style={styles.quizQText}>
-              {quizCurrent.prompt}
-            </Text>
+            <Text style={styles.quizQText}>{quizCurrent.prompt}</Text>
           </View>
 
           {quizCurrent.options.map((opt, idx) => {
             const quizShow = quizLocked;
-            const quizCorrect =
-              idx === quizCurrent.correctIndex;
+            const quizCorrect = idx === quizCurrent.correctIndex;
             const quizPickedWrong =
-              quizShow &&
-              quizChosen === idx &&
-              !quizCorrect;
+              quizShow && quizChosen === idx && !quizCorrect;
 
             let quizOptStyle = styles.quizOpt;
             if (quizShow) {
@@ -582,9 +498,7 @@ const QuizScreen = () => {
                 disabled={quizLocked}
                 style={({pressed}) => [
                   quizOptStyle,
-                  pressed &&
-                    !quizLocked &&
-                    styles.quizPressed,
+                  pressed && !quizLocked && styles.quizPressed,
                 ]}>
                 <View
                   style={[
@@ -608,13 +522,10 @@ const QuizScreen = () => {
                   ]}>
                   {quizShow && quizCorrect ? (
                     <Text style={styles.quizOptCheck}>✓</Text>
-                  ) : quizShow &&
-                    quizPickedWrong ? (
+                  ) : quizShow && quizPickedWrong ? (
                     <Text style={styles.quizOptX}>✕</Text>
                   ) : (
-                    <Text style={styles.quizOptLetter}>
-                      {LETTERS[idx]}
-                    </Text>
+                    <Text style={styles.quizOptLetter}>{LETTERS[idx]}</Text>
                   )}
                 </View>
                 <Text style={styles.quizOptText}>{opt}</Text>
@@ -623,9 +534,7 @@ const QuizScreen = () => {
           })}
         </View>
 
-        <Pressable
-          onPress={quizNext}
-          disabled={!quizLocked}>
+        <Pressable onPress={quizNext} disabled={!quizLocked}>
           <LinearGradient
             colors={['#B38D2F', '#8B6914']}
             start={{x: 0.5, y: 0}}
@@ -633,8 +542,7 @@ const QuizScreen = () => {
             style={[
               styles.quizNextBtn,
 
-              !quizLocked &&
-                styles.quizNextDisabled,
+              !quizLocked && styles.quizNextDisabled,
             ]}>
             <Text style={styles.quizNextText}>
               {quizLast ? 'See Results →' : 'Next Question →'}
@@ -759,7 +667,6 @@ const styles = StyleSheet.create({
   },
   quizRoot: {
     flex: 1,
-    backgroundColor: BG,
     paddingHorizontal: 20,
   },
   quizTopRow: {

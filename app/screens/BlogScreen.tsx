@@ -31,21 +31,15 @@ import {
 
 const BlogScreen = () => {
   const blogInsets = useSafeAreaInsets();
-  const [blogSelectedId, setBlogSelectedId] =
-    useState<string | null>(null);
+  const [blogSelectedId, setBlogSelectedId] = useState<string | null>(null);
 
   const blogFeatured = useMemo(
-    () =>
-      BLOG_ARTICLES.find(a => a.featured) ??
-      BLOG_ARTICLES[0],
+    () => BLOG_ARTICLES.find(a => a.featured) ?? BLOG_ARTICLES[0],
     [],
   );
 
   const blogMore = useMemo(
-    () =>
-      BLOG_ARTICLES.filter(
-        a => a.id !== blogFeatured.id,
-      ),
+    () => BLOG_ARTICLES.filter(a => a.id !== blogFeatured.id),
     [blogFeatured.id],
   );
 
@@ -53,9 +47,7 @@ const BlogScreen = () => {
     if (!blogSelectedId) {
       return undefined;
     }
-    return BLOG_ARTICLES.find(
-      a => a.id === blogSelectedId,
-    );
+    return BLOG_ARTICLES.find(a => a.id === blogSelectedId);
   }, [blogSelectedId]);
 
   const blogOpen = useCallback((id: string) => {
@@ -66,14 +58,11 @@ const BlogScreen = () => {
     setBlogSelectedId(null);
   }, []);
 
-  const blogShare = useCallback(
-    async (a: BlogArticle) => {
-      await Share.share({
-        message: `${a.title}\n\n${a.subtitle}`,
-      });
-    },
-    [],
-  );
+  const blogShare = useCallback(async (a: BlogArticle) => {
+    await Share.share({
+      message: `${a.title}\n\n${a.subtitle}`,
+    });
+  }, []);
 
   if (blogSelected) {
     return (
@@ -108,29 +97,21 @@ const BlogScreen = () => {
             </View>
 
             <View style={styles.blogDetailHeroText}>
-              <Text style={styles.blogDetailTitle}>
-                {blogSelected.title}
-              </Text>
+              <Text style={styles.blogDetailTitle}>{blogSelected.title}</Text>
             </View>
           </ImageBackground>
 
           <View style={styles.blogDetailBody}>
-            <Text style={styles.blogDetailSub}>
-              {blogSelected.subtitle}
-            </Text>
+            <Text style={styles.blogDetailSub}>{blogSelected.subtitle}</Text>
 
             {blogSelected.sections.map((s, idx) => (
               <View
                 key={`${blogSelected.id}-${idx}`}
                 style={styles.blogSection}>
                 {s.title ? (
-                  <Text style={styles.blogSectionTitle}>
-                    {s.title}
-                  </Text>
+                  <Text style={styles.blogSectionTitle}>{s.title}</Text>
                 ) : null}
-                <Text style={styles.blogSectionBody}>
-                  {s.body}
-                </Text>
+                <Text style={styles.blogSectionBody}>{s.body}</Text>
               </View>
             ))}
 
@@ -143,9 +124,7 @@ const BlogScreen = () => {
                 source={require('../../assets/i/skguidenzcittytalshr.png')}
                 style={styles.blogShareIcon}
               />
-              <Text style={styles.blogShareText}>
-                Share this article
-              </Text>
+              <Text style={styles.blogShareText}>Share this article</Text>
             </GoldGradientButton>
           </View>
         </View>
@@ -155,11 +134,7 @@ const BlogScreen = () => {
 
   return (
     <ScreenLayout bounce={false}>
-      <View
-        style={[
-          styles.blogRoot,
-          {paddingTop: blogInsets.top + 8},
-        ]}>
+      <View style={[styles.blogRoot, {paddingTop: blogInsets.top + 8}]}>
         <View style={styles.blogHeader}>
           <Text style={styles.blogKicker}>STORIES</Text>
           <Text style={styles.blogTitle}>Nature Blog</Text>
@@ -183,9 +158,7 @@ const BlogScreen = () => {
 
             <View style={styles.blogFeaturedTopRow}>
               <View style={styles.blogFeaturedBadge}>
-                <Text style={styles.blogFeaturedBadgeText}>
-                  ⭐ FEATURED
-                </Text>
+                <Text style={styles.blogFeaturedBadgeText}>⭐ FEATURED</Text>
               </View>
             </View>
 
@@ -195,16 +168,10 @@ const BlogScreen = () => {
                   {formatBlogTagUpper(blogFeatured.tag)}
                 </Text>
                 <Text style={styles.blogMetaDot}>·</Text>
-                <Text style={styles.blogMetaTime}>
-                  {blogFeatured.readTime}
-                </Text>
+                <Text style={styles.blogMetaTime}>{blogFeatured.readTime}</Text>
               </View>
-              <Text style={styles.blogFeaturedTitle}>
-                {blogFeatured.title}
-              </Text>
-              <Text
-                style={styles.blogFeaturedSub}
-                numberOfLines={2}>
+              <Text style={styles.blogFeaturedTitle}>{blogFeatured.title}</Text>
+              <Text style={styles.blogFeaturedSub} numberOfLines={2}>
                 {blogFeatured.subtitle}
               </Text>
             </View>
@@ -233,13 +200,9 @@ const BlogScreen = () => {
                     {formatBlogTagUpper(item.tag)}
                   </Text>
                   <Text style={styles.blogMetaDot}>·</Text>
-                  <Text style={styles.blogMetaTime}>
-                    {item.readTime}
-                  </Text>
+                  <Text style={styles.blogMetaTime}>{item.readTime}</Text>
                 </View>
-                <Text
-                  style={styles.blogRowTitle}
-                  numberOfLines={2}>
+                <Text style={styles.blogRowTitle} numberOfLines={2}>
                   {item.title}
                 </Text>
                 <Text style={styles.blogRowSub} numberOfLines={2}>
@@ -259,7 +222,6 @@ const BlogScreen = () => {
 const styles = StyleSheet.create({
   blogRoot: {
     flex: 1,
-    backgroundColor: BG,
   },
   blogHeader: {
     paddingHorizontal: 20,
@@ -406,7 +368,6 @@ const styles = StyleSheet.create({
 
   blogDetailRoot: {
     flex: 1,
-    backgroundColor: BG,
   },
   blogDetailHero: {
     minHeight: 300,

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {ScrollView, StyleSheet, View} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const ScreenLayout = ({
   children,
@@ -12,7 +13,9 @@ const ScreenLayout = ({
   bounce?: boolean;
 }) => {
   return (
-    <View style={styles.layoutBackground}>
+    <LinearGradient
+      colors={['rgb(44, 39, 39)', 'rgb(20, 18, 18)']}
+      style={styles.layoutBackground}>
       {layoutScroll ? (
         <ScrollView
           bounces={bounce}
@@ -23,7 +26,7 @@ const ScreenLayout = ({
       ) : (
         <View style={styles.layoutFill}>{children}</View>
       )}
-    </View>
+    </LinearGradient>
   );
 };
 

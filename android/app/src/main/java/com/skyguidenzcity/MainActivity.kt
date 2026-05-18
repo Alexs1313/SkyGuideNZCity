@@ -1,4 +1,4 @@
-package com.skyguidenzcity
+package com.the.sky.guide.clty
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

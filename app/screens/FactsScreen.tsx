@@ -119,7 +119,10 @@ const FactsScreen = () => {
           right={<SurpriseMeButton onPress={factsRandom} />}
         />
 
-        <FactsFilterChips filter={factsFilter} onFilterChange={setFactsFilter} />
+        <FactsFilterChips
+          filter={factsFilter}
+          onFilterChange={setFactsFilter}
+        />
 
         <Text style={styles.factsCount}>{factsCountLabel}</Text>
       </>
@@ -165,7 +168,6 @@ function FactsListSeparator() {
 const styles = StyleSheet.create({
   factsRoot: {
     flex: 1,
-    backgroundColor: BG,
   },
   factsListContent: {
     paddingTop: 0,

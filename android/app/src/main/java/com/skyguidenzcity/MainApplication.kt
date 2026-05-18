@@ -1,4 +1,4 @@
-package com.skyguidenzcity
+package com.the.sky.guide.clty
 
 import android.app.Application
 import com.facebook.react.PackageList
