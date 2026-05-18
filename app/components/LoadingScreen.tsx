@@ -1,4 +1,4 @@
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {Image, Platform, ScrollView, StyleSheet, View} from 'react-native';
 
 import React, {useEffect} from 'react';
 
@@ -168,7 +168,14 @@ const LoadingScreen = () => {
         contentContainerStyle={styles.loadscrollContent}
         showsVerticalScrollIndicator={false}>
         <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-          <Image source={require('../../assets/i/skguidenzcittloadr.png')} />
+          {Platform.OS === 'android' ? (
+            <Image
+              source={require('../../assets/i/icon.png')}
+              style={{width: 210, height: 210, borderRadius: 45}}
+            />
+          ) : (
+            <Image source={require('../../assets/i/skguidenzcittloadr.png')} />
+          )}
         </View>
         <View style={styles.loadbottomWrap}>
           <WebView

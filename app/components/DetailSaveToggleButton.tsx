@@ -30,16 +30,12 @@ const DetailSaveToggleButton = ({
           start={{x: 0.5, y: 0}}
           end={{x: 0.5, y: 1}}
           style={styles.grad}>
-          <Image
-            source={require('../../assets/i/skguidenzcittytasvdd.png')}
-          />
+          <Image source={require('../../assets/i/skguidenzcittytasvdd.png')} />
           <Text style={styles.txtOn}>Saved</Text>
         </LinearGradient>
       ) : (
         <View style={styles.outline}>
-          <Image
-            source={require('../../assets/i/skguidenzcittytasvd.png')}
-          />
+          <Image source={require('../../assets/i/skguidenzcittytasvd.png')} />
           <Text style={styles.txt}>Save</Text>
         </View>
       )}
@@ -65,14 +61,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    height: 52,
+    height: 65,
   },
   outline: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    height: 52,
+    height: 65,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: '#B38D2F59',

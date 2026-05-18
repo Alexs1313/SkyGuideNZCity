@@ -33,10 +33,7 @@ import {
   filterLocationsByCategory,
   heroImageForLocationIndex,
 } from '../data/locationsData';
-import type {
-  LocationItem,
-  LocationFilter,
-} from '../data/locationTypes';
+import type {LocationItem, LocationFilter} from '../data/locationTypes';
 
 const GOLD = '#B38D2F';
 const WHITE = '#FFFFFF';
@@ -74,16 +71,11 @@ const MapScreen = () => {
     if (!mapSelectedId) {
       return undefined;
     }
-    return mapFiltered.find(
-      l => l.id === mapSelectedId,
-    );
+    return mapFiltered.find(l => l.id === mapSelectedId);
   }, [mapFiltered, mapSelectedId]);
 
   useEffect(() => {
-    if (
-      mapSelectedId &&
-      !mapFiltered.some(l => l.id === mapSelectedId)
-    ) {
+    if (mapSelectedId && !mapFiltered.some(l => l.id === mapSelectedId)) {
       setMapSelectedId(null);
     }
   }, [mapFiltered, mapSelectedId]);
@@ -129,16 +121,14 @@ const MapScreen = () => {
     }
     let raf1 = 0;
     let raf2 = 0;
-    const mapTask = InteractionManager.runAfterInteractions(
-      () => {
-        raf1 = requestAnimationFrame(() => {
+    const mapTask = InteractionManager.runAfterInteractions(() => {
+      raf1 = requestAnimationFrame(() => {
+        mapFitPins();
+        raf2 = requestAnimationFrame(() => {
           mapFitPins();
-          raf2 = requestAnimationFrame(() => {
-            mapFitPins();
-          });
         });
-      },
-    );
+      });
+    });
     return () => {
       mapTask.cancel();
       if (raf1) {
@@ -148,29 +138,17 @@ const MapScreen = () => {
         cancelAnimationFrame(raf2);
       }
     };
-  }, [
-    mapFilter,
-    mapReady,
-    mapFitPins,
-  ]);
+  }, [mapFilter, mapReady, mapFitPins]);
 
   const mapHero = useCallback((item: LocationItem) => {
-    const mapGi = LOCATIONS.findIndex(
-      l => l.id === item.id,
-    );
-    return heroImageForLocationIndex(
-      mapGi >= 0 ? mapGi : 0,
-    );
+    const mapGi = LOCATIONS.findIndex(l => l.id === item.id);
+    return heroImageForLocationIndex(mapGi >= 0 ? mapGi : 0);
   }, []);
 
   return (
     <ScreenLayout>
       <View style={styles.mapRoot}>
-        <View
-          style={[
-            styles.mapHeader,
-            {paddingTop: mapInsets.top + 8},
-          ]}>
+        <View style={[styles.mapHeader, {paddingTop: mapInsets.top + 8}]}>
           <ScreenHeader kicker="INTERACTIVE" title="Map" />
 
           <EmojiFilterChipRow
@@ -181,11 +159,7 @@ const MapScreen = () => {
           />
         </View>
 
-        <View
-          style={[
-            styles.mapBody,
-            {paddingBottom: mapInsets.bottom + 96},
-          ]}>
+        <View style={[styles.mapBody, {paddingBottom: mapInsets.bottom + 96}]}>
           <View style={styles.mapMapOuter}>
             <MapView
               ref={mapRef}
@@ -203,8 +177,7 @@ const MapScreen = () => {
                 requestAnimationFrame(() => mapFitPins());
               }}>
               {mapFiltered.map(item => {
-                const mapIsSel =
-                  item.id === mapSelectedId;
+                const mapIsSel = item.id === mapSelectedId;
                 return (
                   <Marker
                     key={item.id}
@@ -213,13 +186,15 @@ const MapScreen = () => {
                     zIndex={mapIsSel ? 10 : 1}
                     tracksViewChanges={false}
                     onPress={() => setMapSelectedId(item.id)}>
-                    <Image
-                      source={
-                        mapIsSel
-                          ? require('../../assets/i/skguidenzcittpinact.png')
-                          : require('../../assets/i/skguidenzcittpin.png')
-                      }
-                    />
+                    {Platform.OS === 'ios' ? (
+                      <Image
+                        source={
+                          mapIsSel
+                            ? require('../../assets/i/skguidenzcittpinact.png')
+                            : require('../../assets/i/skguidenzcittpin.png')
+                        }
+                      />
+                    ) : null}
                   </Marker>
                 );
               })}
@@ -242,20 +217,16 @@ const MapScreen = () => {
             <View
               style={[
                 styles.mapPinBadge,
-                mapSelected &&
-                  styles.mapPinBadgeLifted,
+                mapSelected && styles.mapPinBadgeLifted,
               ]}>
               <Text style={styles.mapPinBadgeText}>
-                {mapFiltered.length}{' '}
-                {mapFiltered.length === 1 ? 'pin' : 'pins'}
+                {mapFiltered.length} {mapFiltered.length === 1 ? 'pin' : 'pins'}
               </Text>
             </View>
 
             {mapSelected ? (
               <Pressable
-                onPress={() =>
-                  mapOpenDetail(mapSelected.id)
-                }
+                onPress={() => mapOpenDetail(mapSelected.id)}
                 style={({pressed}) => [
                   styles.mapPreview,
                   pressed && styles.mapPressed,
@@ -271,12 +242,9 @@ const MapScreen = () => {
                 </ImageBackground>
                 <View style={styles.mapPreviewBody}>
                   <Text style={styles.mapPreviewBadge}>
-                    {mapSelected.badgeEmoji}{' '}
-                    {mapSelected.categoryBadge}
+                    {mapSelected.badgeEmoji} {mapSelected.categoryBadge}
                   </Text>
-                  <Text
-                    style={styles.mapPreviewName}
-                    numberOfLines={2}>
+                  <Text style={styles.mapPreviewName} numberOfLines={2}>
                     {mapSelected.name}
                   </Text>
                   <Text style={styles.mapPreviewHint}>
